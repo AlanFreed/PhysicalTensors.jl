@@ -79,7 +79,7 @@ where the keyword `format` is a character that, whenever its value is 'E' or 'e'
 
 ## Operators
 
-The following operators have been overloaded so that they can handle objects of type PhysicalTensor, whenever such operations make sense, e.g., one cannot add two tensors with different units or different dimensions. The overloaded logical operators include: `==`, `≠` and `≈`. The overloaded unary operators include: `+` and `-`. And the overloaded binary operators include: `+`, `-`, `*` and `/`.
+The following operators have been overloaded so that they can handle objects of type PhysicalTensor, whenever such operations make sense, e.g., one cannot add two tensors with different units or different dimensions. The overloaded logical operators include: `==`, `≠` and `≈`. The overloaded unary operators include: `+` and `-`. And the overloaded binary operators include: `+`, `-`, `*`, `/` and `\`, where the latter solves a linear system of equations, e.g., **Ax** = **b** solved for **x**, which is written in code as `x = A\b`.
 
 ## Methods for both PhysicalTensor and ArrayOfPhysicalTensors
 
@@ -87,3 +87,52 @@ The following methods can accept arguments that are objects of either type, viz.
 
 ## Math functions for PhysicalTensor
 
+To get the matrix of real values held by a physical tensor:
+```
+function toMatrix(t::PhysicalTensor)::StaticMatrix
+```
+
+To construct a tensor product between two vectors, typically written as `t = y⊗z` or in component notation as `tᵢⱼ = yᵢzⱼ`:
+```
+function tensorProduct(y::PhysicalVector, z::PhysicalVector)::PhysicalTensor
+```
+
+To get the transpose of a tensor:
+```
+function Base.:(transpose)(t::PhysicalTensor)::PhysicalTensor
+```
+
+To get the trace of a tensor:
+```
+function LinearAlgebra.:(tr)(t::PhysicalTensor)::PhysicalScalar
+```
+
+To get the determinant of a tensor:
+```
+function LinearAlgebra.:(det)(t::PhysicalTensor)::PhysicalScalar
+```
+
+To get the inverse of a tensor, when it exists:
+```
+function Base.:(inv)(t::PhysicalTensor)::PhysicalTensor
+```
+
+To get the **QR** or Gram-Schmidt decomposition of a tensor, when it exists:
+```
+function LinearAlgebra.:(qr)(t::PhysicalTensor)::Tuple
+```
+e.g., written in code as
+```
+(Q, R) = qr(t)
+```
+where **Q** is an orthogonal Gram rotation matrix, and **R** is an upper-triangular (right) matrix.
+
+To get the **LQ** decomposition of a tensor, when it exists:
+```
+function LinearAlgebra.:(lq)(y::PhysicalMatrix)::Tuple
+```
+e.g., written in code as
+```
+(L, Q) = lq(t)
+```
+where **L** is a lower-triangular (left) matrix, and **Q** is an orthogonal rotation matrix.
