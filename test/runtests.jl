@@ -3,14 +3,10 @@ module runtests
 using
     MutableTypes,
     PhysicalSystemsOfUnits,
-    PhysicalFields,
     PhysicalScalars,
     PhysicalVectors,
     PhysicalTensors,
     Test
-
-const
-    toString = PhysicalFields.toString
 
 # Create a force vector.
 f = newPhysicalVector(3, NEWTON)
@@ -49,7 +45,7 @@ end
 end
 
 @testset "toString" begin
-    @test toString(σ) == "⌈ 1.0000E+00  2.0000E+00  3.0000E+00⌉
+    @test PhysicalTensors.toString(σ) == "⌈ 1.0000E+00  2.0000E+00  3.0000E+00⌉
 | 4.0000E+00  5.0000E+00  6.0000E+00| kg/(m⋅s²)
 ⌊ 7.0000E+00  8.0000E+00  9.0000E+00⌋"
 end

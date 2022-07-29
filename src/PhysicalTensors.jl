@@ -16,7 +16,7 @@ using
     newArrayOfPhysicalTensors,
     getindex,
     setindex!,
-    toString
+    TtoString
 
 export
     # For both PhysicalTensor and ArrayOfPhysicalTensors objects:
@@ -28,7 +28,9 @@ export
     copy,
     deepcopy,
     # For PhysicalTensor objects:
+    toString,
     toMatrix,
+    # linear algebra functions
     norm,
     tensorProduct,
     transpose,
@@ -668,7 +670,9 @@ end
 --------------------------------------------------------------------------------
 =#
 
-# Functions of type PhysicalTensor:
+function toString(t::PhysicalTensor; format::Char='E')::String
+    return TtoString(t; format)
+end
 
 function toMatrix(t::PhysicalTensor)::StaticMatrix
     return deepcopy(t.m)

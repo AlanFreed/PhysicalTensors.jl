@@ -1,7 +1,7 @@
 name = "PhysicalTensors"
 uuid = "76dab92c-8cca-4b84-acf2-a3094bd623fa"
 authors = ["Alan Freed <alan.d.freed@proton.me>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"

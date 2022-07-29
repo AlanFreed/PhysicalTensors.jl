@@ -67,15 +67,22 @@ function newArrayOfPhysicalTensors(len::Integer, t₁::PhysicalTensor)::ArrayOfP
 
 where `t₁` is the first entry in a new array of tensors whose length is `len`.
 
-To retrieve and assign array values, functions `Base.:(getindex)` and `Base.:(setindex!)` have been overloaded so that the bracket notation `[]` can be used to: *i)* retrieve and assign scalar fields belonging to an instance of `PhysicalTensor`, and *ii)* retrieve and assign tensor fields belonging to an instance of `ArrayOfPhysicalTensors`. 
+To retrieve and assign array values, functions `Base.:(getindex)` and `Base.:(setindex!)` have been overloaded so that the bracket notation `[]` can be used to: *i)* retrieve and assign scalar fields belonging to an instance of `PhysicalTensor`, and *ii)* retrieve and assign tensor fields belonging to an instance of `ArrayOfPhysicalTensors`.
 
-Also, conversion to a string is provided for instances of `PhysicalTensor` by the re-exported method
+## Type conversions
+
+Conversion to a string is provided for instances of `PhysicalTensor` by the function
 
 ```
 function toString(t::PhysicalTensor; format::Char='E')::String
 ```
 
 where the keyword `format` is a character that, whenever its value is 'E' or 'e', represents the tensor components in a scientific notation; otherwise, they will be represented in a fixed-point notation.
+
+Conversion to a matrix of the values held by a tensor is provided by
+```
+function toMatrix(t::PhysicalTensor)::StaticMatrix
+```
 
 ## Operators
 
@@ -86,11 +93,6 @@ The following operators have been overloaded so that they can handle objects of 
 The following methods can accept arguments that are objects of either type, viz., PhysicalTensor or ArrayOfPhysicalTensors. They are self explanatory: `copy`, `deepcopy`, `isDimensionless`, `isCGS`, `isSI`, `toCGS` and `toSI`.
 
 ## Math functions for PhysicalTensor
-
-To get the matrix of real values held by a physical tensor:
-```
-function toMatrix(t::PhysicalTensor)::StaticMatrix
-```
 
 To construct a tensor product between two vectors, typically written as `t = y⊗z` or in component notation as `tᵢⱼ = yᵢzⱼ`:
 ```
